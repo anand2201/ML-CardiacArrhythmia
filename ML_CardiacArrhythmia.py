@@ -1,10 +1,13 @@
 import pandas
 import numpy as np
 from sklearn import svm
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import f_regression
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import Imputer
 from sklearn.decomposition import PCA
 
@@ -40,24 +43,30 @@ y_new = y.astype(int)
 # x_test = x_new[:-100, :]
 # y_test = y_new[:-100]
 
-x_train, x_test, y_train, y_test = train_test_split(x_new, y_new, test_size=0.10, random_state=40)
+x_train, x_test, y_train, y_test = train_test_split(x_new, y_new, test_size=0.10, random_state=50)
 pca = PCA(n_components=23)
 pca.fit(x_train)
-x_train = pca.transform(x_train)
-x_test = pca.transform(x_test)
+x_train_pca = pca.transform(x_train)
+x_test_pca = pca.transform(x_test)
 
-clf = LogisticRegression(solver='sag', max_iter=100, random_state=42, multi_class='ovr').fit(x_train, y_train)
+clf = LogisticRegression(solver='sag', max_iter=100, random_state=42, multi_class='ovr').fit(x_train_pca, y_train)
 print("Logistic Regression Prediction :")
-y_pred = clf.predict(x_test)
+y_pred = clf.predict(x_test_pca)
 print(accuracy_score(y_test, y_pred))
-print("training score : %.3f (%s)" % (clf.score(x_train, y_train), 'multinomial'))
-
-
+print("training score : %.3f (%s)" % (clf.score(x_train_pca, y_train), 'multinomial'))
+#
+#
 lin_clf = svm.SVC(kernel='linear')
-lin_clf.fit(x_train, y_train)
-y_pred = lin_clf.predict(x_test)
-# print(y_test)
-# print(y_pred)
+lin_clf.fit(x_train_pca, y_train)
+y_pred = lin_clf.predict(x_test_pca)
 print("SVM Classification Prediction : ")
 print(accuracy_score(y_test, y_pred))
-print("training score : %.3f (%s)" % (lin_clf.score(x_train, y_train), 'linear'))
+print("training score : %.3f (%s)" % (lin_clf.score(x_train_pca, y_train), 'linear'))
+
+anova_filter = SelectKBest(f_regression, k=23)
+clf = svm.SVC(kernel='linear')
+anova_svm = make_pipeline(anova_filter, clf)
+anova_svm.fit(x_train, y_train)
+y_pred = anova_svm.predict(x_test)
+print("ANOVA SVM Classification Prediction : ")
+print(accuracy_score(y_test, y_pred))
