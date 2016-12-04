@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9127bc4f-1960-458d-b3cc-b5ca1e954f97" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/Sri.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Sri.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ML_CardiacArrhythmia.py" afterPath="$PROJECT_DIR$/ML_CardiacArrhythmia.py" />
     </list>
     <ignored path="ML-CardiacArrhythmia.iws" />
@@ -20,7 +18,7 @@
     <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$plot_iris_logistic.coverage" NAME="plot_iris_logistic Coverage Results" MODIFIED="1480188114041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$sample2.coverage" NAME="sample2 Coverage Results" MODIFIED="1480557236406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$ML_CardiacArrhythmia.coverage" NAME="ML_CardiacArrhythmia Coverage Results" MODIFIED="1480808966226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$ImageTkinter.coverage" NAME="ImageTkinter Coverage Results" MODIFIED="1480553563244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$ImageTkinter.coverage" NAME="ImageTkinter Coverage Results" MODIFIED="1480811949547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$sample.coverage" NAME="sample Coverage Results" MODIFIED="1480556587682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$feature_selection_pipeline.coverage" NAME="feature_selection_pipeline Coverage Results" MODIFIED="1480270393247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ML-CardiacArrhythmia$svm_final.coverage" NAME="svm_final Coverage Results" MODIFIED="1480268144349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -40,8 +38,8 @@
       <file leaf-file-name="ML_CardiacArrhythmia.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ML_CardiacArrhythmia.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="107" column="41" selection-start-line="107" selection-start-column="41" selection-end-line="107" selection-end-column="41" />
+            <state relative-caret-position="840">
+              <caret line="87" column="68" selection-start-line="87" selection-start-column="68" selection-end-line="87" selection-end-column="68" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -54,6 +52,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1515">
               <caret line="101" column="853" selection-start-line="101" selection-start-column="853" selection-end-line="101" selection-end-column="853" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="arrhythmia.names" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/arrhythmia.names">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -157,7 +165,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ML_CardiacArrhythmia">
+  <component name="RunManager" selected="Python.ImageTkinter">
     <configuration default="false" name="ML_CardiacArrhythmia" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -465,10 +473,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.ML_CardiacArrhythmia" />
-        <item index="1" class="java.lang.String" itemvalue="Python.sample2" />
-        <item index="2" class="java.lang.String" itemvalue="Python.sample" />
-        <item index="3" class="java.lang.String" itemvalue="Python.ImageTkinter" />
+        <item index="0" class="java.lang.String" itemvalue="Python.ImageTkinter" />
+        <item index="1" class="java.lang.String" itemvalue="Python.ML_CardiacArrhythmia" />
+        <item index="2" class="java.lang.String" itemvalue="Python.sample2" />
+        <item index="3" class="java.lang.String" itemvalue="Python.sample" />
         <item index="4" class="java.lang.String" itemvalue="Python.feature_selection_pipeline" />
       </list>
     </recent_temporary>
@@ -853,29 +861,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ImageTkinter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="51" column="57" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/arrhythmia.names">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sample2.py" />
     <entry file="file://$PROJECT_DIR$/sample.py" />
-    <entry file="file://$PROJECT_DIR$/svm_final.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="127" column="0" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data.mat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -892,10 +879,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/arrhythmia.names">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageTkinter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/svm_final.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ML_CardiacArrhythmia.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="107" column="41" selection-start-line="107" selection-start-column="41" selection-end-line="107" selection-end-column="41" />
+        <state relative-caret-position="840">
+          <caret line="87" column="68" selection-start-line="87" selection-start-column="68" selection-end-line="87" selection-end-column="68" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

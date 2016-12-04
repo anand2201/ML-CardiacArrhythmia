@@ -80,16 +80,16 @@ logistic_classifier = LogisticRegression(solver='sag', max_iter=1000, random_sta
     x_train_pca, y_train)
 
 # The final prediction matrix
-y_pred = logistic_classifier.predict(x_test_pca)
+y_predict = logistic_classifier.predict(x_test_pca)
 
 print("Logistic Regression Classification Prediction : ")
 
 # The training score of the Logistic regression estimator.
-print("training score of the Logistic Regression Classifier: %.3f (%s)" % (
-logistic_classifier.score(x_train_pca, y_train), 'multinomial'))
+print("Training score for Logistic Regression Classifier: %.3f (%s)" % (
+    logistic_classifier.score(x_train_pca, y_train), 'multinomial'))
 
 # The accuracy of the Logistic regression classifier
-print(accuracy_score(y_test, y_pred))
+print(accuracy_score(y_test, y_predict))
 
 # Support Vector Machine Classifier is identified to be a better classifier for this classification problem
 # Here I am trying to use a 'Linear' kernel for the converting the data for the non-linear separable data
@@ -100,15 +100,15 @@ svm_classifier = svm.SVC(kernel='linear')
 svm_classifier.fit(x_train_pca, y_train)
 
 # Performing a prediction of the 'x_test'
-y_pred = svm_classifier.predict(x_test_pca)
+y_predict = svm_classifier.predict(x_test_pca)
 
 print("SVM Classification Prediction : ")
 
 # The training score of the SVM estimator to check how it performed while training or inference
-print("training score : %.3f (%s)" % (svm_classifier.score(x_train_pca, y_train), 'linear'))
+print("Training score for SVM Classifier : %.3f (%s)" % (svm_classifier.score(x_train_pca, y_train), 'linear'))
 
 # Final accuracy score of the svm estimator of the test data
-print(accuracy_score(y_test, y_pred))
+print(accuracy_score(y_test, y_predict))
 
 # ANOVA is a special type of filtering the input feature vector. The rationale behind this approach is to select the
 # most appropriate feature vector to maximize the accuracy of the 'SVM' estimator
@@ -125,9 +125,9 @@ anova_svm = make_pipeline(anova_filter, anova_svm_classifier)
 anova_svm.fit(x_train, y_train)
 
 # Final prediction of the trained 'SVM' estimator against the given 'x_test' vector
-y_pred = anova_svm.predict(x_test)
+y_predict = anova_svm.predict(x_test)
 
 print("ANOVA SVM Classification Prediction : ")
 
 # Final accuracy score of the predicted data and the actual data
-print(accuracy_score(y_test, y_pred))
+print(accuracy_score(y_test, y_predict))
