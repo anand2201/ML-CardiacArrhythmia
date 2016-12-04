@@ -58,7 +58,7 @@ y_new = y.astype(int)
 
 # The raw input data 'X' and label 'Y' are given to a train_test_split function which basically splits the data into
 # train and test vectors on the 'test_size' factor and the randomization factor for randomizing the dataset for split
-x_train, x_test, y_train, y_test = train_test_split(x_new, y_new, test_size=0.10, random_state=50)
+x_train, x_test, y_train, y_test = train_test_split(x_new, y_new, test_size=0.10, random_state=100)
 
 # Since this is a very high dimensional dataset there are many ways for the prediction to get skewed.
 # 1. Noisy data
@@ -76,17 +76,17 @@ x_test_pca = pca.transform(x_test)
 # Perform Logistic regression inference on the 'x_train' and 'y_train'
 # Logistic regression is performed using 'sag' solver and 'ovr -> one-vs-rest' or 'multinomial' classifier
 # The objection function or the gradient descend is performed for a max iteration of 100
-logistic_classifier = LogisticRegression(solver='sag', max_iter=1000, random_state=42, multi_class='multinomial').fit(
-    x_train_pca, y_train)
+logistic_classifier = LogisticRegression(solver='sag', max_iter=4000, random_state=42, multi_class='multinomial').fit(
+    x_train, y_train)
 
 # The final prediction matrix
-y_predict = logistic_classifier.predict(x_test_pca)
+y_predict = logistic_classifier.predict(x_test)
 
 print("Logistic Regression Classification Prediction : ")
 
 # The training score of the Logistic regression estimator.
 print("Training score for Logistic Regression Classifier: %.3f (%s)" % (
-    logistic_classifier.score(x_train_pca, y_train), 'multinomial'))
+    logistic_classifier.score(x_train, y_train), 'multinomial'))
 
 # The accuracy of the Logistic regression classifier
 print(accuracy_score(y_test, y_predict))
@@ -97,22 +97,22 @@ print(accuracy_score(y_test, y_predict))
 svm_classifier = svm.SVC(kernel='linear')
 
 # Training the SVM with the input 'x_train' and the label 'y_train' vectors for inference
-svm_classifier.fit(x_train_pca, y_train)
+svm_classifier.fit(x_train, y_train)
 
 # Performing a prediction of the 'x_test'
-y_predict = svm_classifier.predict(x_test_pca)
+y_predict = svm_classifier.predict(x_test)
 
 print("SVM Classification Prediction : ")
 
 # The training score of the SVM estimator to check how it performed while training or inference
-print("Training score for SVM Classifier : %.3f (%s)" % (svm_classifier.score(x_train_pca, y_train), 'linear'))
+print("Training score for SVM Classifier : %.3f (%s)" % (svm_classifier.score(x_train, y_train), 'linear'))
 
 # Final accuracy score of the svm estimator of the test data
 print(accuracy_score(y_test, y_predict))
 
 # ANOVA is a special type of filtering the input feature vector. The rationale behind this approach is to select the
 # most appropriate feature vector to maximize the accuracy of the 'SVM' estimator
-anova_filter = SelectKBest(f_regression, k=23)
+anova_filter = SelectKBest(f_regression, k=90)
 
 # The kernel is specified to 'Linear' so that the data transformation by the SVM kernel is linear
 anova_svm_classifier = svm.SVC(kernel='linear')
