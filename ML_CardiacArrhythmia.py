@@ -66,7 +66,7 @@ x_train, x_test, y_train, y_test = train_test_split(x_new, y_new, test_size=0.10
 # 3. Skewed feature vectors
 # 4. High mean variance between feature groups which tends to skew the results
 # Trying to perform dimensionality reduction for higher performance and achieve more accuracy
-pca = PCA(n_components=23)
+pca = PCA(n_components=50)
 
 # Fitting the 'x_train' and 'x_test' data to be reduced to a lower component range
 pca.fit(x_train)
@@ -76,17 +76,17 @@ x_test_pca = pca.transform(x_test)
 # Perform Logistic regression inference on the 'x_train' and 'y_train'
 # Logistic regression is performed using 'sag' solver and 'ovr -> one-vs-rest' or 'multinomial' classifier
 # The objection function or the gradient descend is performed for a max iteration of 100
-logistic_classifier = LogisticRegression(solver='sag', max_iter=4000, random_state=42, multi_class='multinomial').fit(
-    x_train, y_train)
+logistic_classifier = LogisticRegression(solver='sag', max_iter=4000, random_state=10, multi_class='multinomial').fit(
+    x_train_pca, y_train)
 
 # The final prediction matrix
-y_predict = logistic_classifier.predict(x_test)
+y_predict = logistic_classifier.predict(x_test_pca)
 
 print("Logistic Regression Classification Prediction : ")
 
 # The training score of the Logistic regression estimator.
 print("Training score for Logistic Regression Classifier: %.3f (%s)" % (
-    logistic_classifier.score(x_train, y_train), 'multinomial'))
+    logistic_classifier.score(x_train_pca, y_train), 'multinomial'))
 
 # The accuracy of the Logistic regression classifier
 print(accuracy_score(y_test, y_predict))
@@ -97,15 +97,15 @@ print(accuracy_score(y_test, y_predict))
 svm_classifier = svm.SVC(kernel='linear')
 
 # Training the SVM with the input 'x_train' and the label 'y_train' vectors for inference
-svm_classifier.fit(x_train, y_train)
+svm_classifier.fit(x_train_pca, y_train)
 
 # Performing a prediction of the 'x_test'
-y_predict = svm_classifier.predict(x_test)
+y_predict = svm_classifier.predict(x_test_pca)
 
 print("SVM Classification Prediction : ")
 
 # The training score of the SVM estimator to check how it performed while training or inference
-print("Training score for SVM Classifier : %.3f (%s)" % (svm_classifier.score(x_train, y_train), 'linear'))
+print("Training score for SVM Classifier : %.3f (%s)" % (svm_classifier.score(x_train_pca, y_train), 'linear'))
 
 # Final accuracy score of the svm estimator of the test data
 print(accuracy_score(y_test, y_predict))
