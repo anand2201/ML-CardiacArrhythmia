@@ -31,7 +31,7 @@ def pca_computation(list_of_components, x_train_val, x_test_val):
 
 input_list = ['1', '2', '3', '4', '5', '6']
 
-print("Please type value from 1 to 5 to perform the below indicated operation: ")
+print("Please type value from 1 to 6 to perform the below indicated operation: ")
 print("1. Logistic Regression only")
 print("2. Linear SVM only")
 print("3. ANOVA SVM only")
