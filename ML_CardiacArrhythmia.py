@@ -130,6 +130,7 @@ if var in ['1', '4', '5']:
     print("****************************************************************************************\n")
 
     if var == '5':
+        print("Generating the PCA Components vs Accuracy Graph for Logistic Regression:\n")
         # Get the list of 'x_train' and 'x_test' for various PCA components declared at the script initialization
         x_train_pca_list, x_test_pca_list = pca_computation(pca_components, x_train, x_test)
         logistic_regression_accuracy_list = []
@@ -147,6 +148,7 @@ if var in ['1', '4', '5']:
         plt.xlabel("PCA Components Range")
         plt.ylabel("Logistic Regression Accuracy Value")
         plt.show()
+        print("****************************************************************************************\n")
 
 if var in ['2', '4', '6']:
     # Support Vector Machine Classifier is identified to be a better classifier for this classification problem
@@ -171,6 +173,7 @@ if var in ['2', '4', '6']:
     print("****************************************************************************************\n")
 
     if var == '6':
+        print("Generating the PCA Components vs Accuracy Graph for SVM Classifier:\n")
         # Obtaining the 'x_train' and 'x_test' for various PCA components
         x_train_pca_list, x_test_pca_list = pca_computation(pca_components, x_train, x_test)
         svm_accuracy_list = []
@@ -187,6 +190,7 @@ if var in ['2', '4', '6']:
         plt.xlabel("PCA Components Range")
         plt.ylabel("SVM Accuracy Value")
         plt.show()
+        print("****************************************************************************************\n")
 
 if var in ['3', '4']:
     # ANOVA is a special type of filtering the input feature vector. The rationale behind this approach is to select the
@@ -200,7 +204,7 @@ if var in ['3', '4']:
     # This is a process used to make the process of execution much more easier
     anova_svm = make_pipeline(anova_filter, anova_svm_classifier)
 
-    # Training the 'SVM' estimator with the 'x_train' and 'y_train' to get the inference weight coefficients
+    # Training the 'SVM' estimator  with the 'x_train' and 'y_train' to get the inference weight coefficients
     anova_svm.fit(x_train, y_train)
 
     # Final prediction of the trained 'SVM' estimator against the given 'x_test' vector
