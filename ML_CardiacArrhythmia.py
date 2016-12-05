@@ -14,10 +14,21 @@ from sklearn.preprocessing import Imputer
 from sklearn.decomposition import PCA
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
+input_list = ['1', '2', '3', '4', '5']
 
-# var = input("Please enter something : ")
-# print(var)
+print("Please type value from 1 to 5 to perform the below indicated operation: ")
+print("1. Logistic Regression only")
+print("2. Linear SVM only")
+print("3. ANOVA SVM only")
+print("4. All estimators")
+print("5. All estimators with high accuracy graph. This runs for different PCA dimensions. (This is time consuming)")
+var = input()
 
+if var not in input_list:
+    print("Please enter an integer from 1 to 5\n\n")
+    sys.exit(2)
+
+print("***************************Performing the Prediction of the dataset*********************")
 
 # Consuming the dataset using Pandas
 data_df = pandas.read_csv('arrhythmia.data', header=None)
@@ -42,6 +53,9 @@ y = data_array.T[-1, :].T
 # After research it is identified that the best possibility is to perform an activity called as imputation which is
 # basically replacing the unknown variables with the mean of the feature vector (i.e. to take the mean of the column)
 # and replacing the NaN with the mean value.
+# Note: I have enquired with professor to confirm that imputation is good data pre-processing strategy to handle unknown
+# variables rather than removing the feature column or filling with 0. Imputation is taking the mean of the column and
+# replacing the unknown variable '?' with the mean of the column
 impute = Imputer(missing_values='NaN', strategy='mean', axis=0, verbose=0, copy=True)
 
 x_new = impute.fit_transform(x, y)
@@ -49,7 +63,8 @@ x_new = impute.fit_transform(x, y)
 y_new = y.astype(int)
 
 # Splitting the data into train and test set. This is a very naive and simple split of top 300 rows takens as train
-# and the rest 100 is taken as the test set
+# and the rest 100 is taken as the test set. This set is basically a sanity test split and it is not a good approach
+# for prediction
 # x_train = x_new[:352, :]
 # y_train = y_new[:352]
 # x_test = x_new[:-100, :]
@@ -73,61 +88,73 @@ pca.fit(x_train)
 x_train_pca = pca.transform(x_train)
 x_test_pca = pca.transform(x_test)
 
-# Perform Logistic regression inference on the 'x_train' and 'y_train'
-# Logistic regression is performed using 'sag' solver and 'ovr -> one-vs-rest' or 'multinomial' classifier
-# The objection function or the gradient descend is performed for a max iteration of 100
-logistic_classifier = LogisticRegression(solver='sag', max_iter=4000, random_state=10, multi_class='multinomial').fit(
-    x_train_pca, y_train)
+if var in ['1', '4', '5']:
+    # Perform Logistic regression inference on the 'x_train' and 'y_train'
+    # Logistic regression is performed using 'sag' solver and 'ovr -> one-vs-rest' or 'multinomial' classifier
+    # The objection function or the gradient descend is performed for a max iteration of 100
+    logistic_classifier = LogisticRegression(solver='sag', max_iter=4000, random_state=10,
+                                             multi_class='multinomial').fit(
+        x_train_pca, y_train)
 
-# The final prediction matrix
-y_predict = logistic_classifier.predict(x_test_pca)
+    # The final prediction matrix
+    y_predict = logistic_classifier.predict(x_test_pca)
 
-print("Logistic Regression Classification Prediction : ")
+    print("****************************************************************************************\n")
 
-# The training score of the Logistic regression estimator.
-print("Training score for Logistic Regression Classifier: %.3f (%s)" % (
-    logistic_classifier.score(x_train_pca, y_train), 'multinomial'))
+    print("Logistic Regression Classification : ")
 
-# The accuracy of the Logistic regression classifier
-print(accuracy_score(y_test, y_predict))
+    # The training score of the Logistic regression estimator.
+    print("Training score for Logistic Regression Classifier: %.3f (%s)" % (
+        logistic_classifier.score(x_train_pca, y_train), 'multinomial'))
 
-# Support Vector Machine Classifier is identified to be a better classifier for this classification problem
-# Here I am trying to use a 'Linear' kernel for the converting the data for the non-linear separable data
-# to a high dimensional space
-svm_classifier = svm.SVC(kernel='linear')
+    # The accuracy of the Logistic regression classifier
+    print("Accuracy score for Logistic Regression Classifier: %.3f \n" % (accuracy_score(y_test, y_predict) * 100))
 
-# Training the SVM with the input 'x_train' and the label 'y_train' vectors for inference
-svm_classifier.fit(x_train_pca, y_train)
+    print("****************************************************************************************\n")
 
-# Performing a prediction of the 'x_test'
-y_predict = svm_classifier.predict(x_test_pca)
+if var in ['2', '4', '5']:
+    # Support Vector Machine Classifier is identified to be a better classifier for this classification problem
+    # Here I am trying to use a 'Linear' kernel for the converting the data for the non-linear separable data
+    # to a high dimensional space
+    svm_classifier = svm.SVC(kernel='linear')
 
-print("SVM Classification Prediction : ")
+    # Training the SVM with the input 'x_train' and the label 'y_train' vectors for inference
+    svm_classifier.fit(x_train_pca, y_train)
 
-# The training score of the SVM estimator to check how it performed while training or inference
-print("Training score for SVM Classifier : %.3f (%s)" % (svm_classifier.score(x_train_pca, y_train), 'linear'))
+    # Performing a prediction of the 'x_test'
+    y_predict = svm_classifier.predict(x_test_pca)
 
-# Final accuracy score of the svm estimator of the test data
-print(accuracy_score(y_test, y_predict))
+    print("SVM Classification : ")
 
-# ANOVA is a special type of filtering the input feature vector. The rationale behind this approach is to select the
-# most appropriate feature vector to maximize the accuracy of the 'SVM' estimator
-anova_filter = SelectKBest(f_regression, k=90)
+    # The training score of the SVM estimator to check how it performed while training or inference
+    print("Training score for SVM Classifier : %.3f (%s)" % (svm_classifier.score(x_train_pca, y_train), 'linear'))
 
-# The kernel is specified to 'Linear' so that the data transformation by the SVM kernel is linear
-anova_svm_classifier = svm.SVC(kernel='linear')
+    # Final accuracy score of the svm estimator of the test data
+    print("Accuracy score for SVM Classifier: %.3f \n" % (accuracy_score(y_test, y_predict) * 100))
 
-# 'make_pipeline' is pipeline function which executes a list of given function in sequential model. This is a process
-# used to make the process of execution much more easier
-anova_svm = make_pipeline(anova_filter, anova_svm_classifier)
+    print("****************************************************************************************\n")
 
-# Training the 'SVM' estimator with the 'x_train' and 'y_train' to get the inference weight coefficients
-anova_svm.fit(x_train, y_train)
+if var in ['3', '4', '5']:
+    # ANOVA is a special type of filtering the input feature vector. The rationale behind this approach is to select the
+    # most appropriate feature vector to maximize the accuracy of the 'SVM' estimator
+    anova_filter = SelectKBest(f_regression, k=90)
 
-# Final prediction of the trained 'SVM' estimator against the given 'x_test' vector
-y_predict = anova_svm.predict(x_test)
+    # The kernel is specified to 'Linear' so that the data transformation by the SVM kernel is linear
+    anova_svm_classifier = svm.SVC(kernel='linear')
 
-print("ANOVA SVM Classification Prediction : ")
+    # 'make_pipeline' is pipeline function which executes a list of given function in sequential model.
+    # This is a process used to make the process of execution much more easier
+    anova_svm = make_pipeline(anova_filter, anova_svm_classifier)
 
-# Final accuracy score of the predicted data and the actual data
-print(accuracy_score(y_test, y_predict))
+    # Training the 'SVM' estimator with the 'x_train' and 'y_train' to get the inference weight coefficients
+    anova_svm.fit(x_train, y_train)
+
+    # Final prediction of the trained 'SVM' estimator against the given 'x_test' vector
+    y_predict = anova_svm.predict(x_test)
+
+    print("ANOVA SVM Classification : ")
+
+    # Final accuracy score of the predicted data and the actual data
+    print("Accuracy score for ANOVA SVM Classifier: %.3f \n" % (accuracy_score(y_test, y_predict) * 100))
+
+    print("****************************************************************************************")
