@@ -14,14 +14,30 @@ from sklearn.preprocessing import Imputer
 from sklearn.decomposition import PCA
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
-input_list = ['1', '2', '3', '4', '5']
+
+
+# Compute the PCA for the given set of components and return a list of x_train and x_test list of dimensional reduced
+# feature vectors
+def pca_computation(list_of_components, x_train_val, x_test_val):
+    list_of_x_train = []
+    list_of_x_test = []
+    for val in list_of_components:
+        current_pca = PCA(n_components=val)
+        current_pca.fit(x_train_val)
+        list_of_x_train.append(current_pca.transform(x_train_val))
+        list_of_x_test.append(current_pca.transform(x_test_val))
+    return list_of_x_train, list_of_x_test
+
+
+input_list = ['1', '2', '3', '4', '5', '6']
 
 print("Please type value from 1 to 5 to perform the below indicated operation: ")
 print("1. Logistic Regression only")
 print("2. Linear SVM only")
 print("3. ANOVA SVM only")
 print("4. All estimators")
-print("5. All estimators with high accuracy graph. This runs for different PCA dimensions. (This is time consuming)")
+print("5. Logistic Regression accuracy graph. This runs for different PCA dimensions. (This is time consuming)")
+print("6. SVM accuracy graph. This runs for different PCA dimensions. (This is time consuming)")
 var = input()
 
 if var not in input_list:
@@ -81,20 +97,21 @@ x_train, x_test, y_train, y_test = train_test_split(x_new, y_new, test_size=0.10
 # 3. Skewed feature vectors
 # 4. High mean variance between feature groups which tends to skew the results
 # Trying to perform dimensionality reduction for higher performance and achieve more accuracy
-pca = PCA(n_components=50)
+pca = PCA(n_components=80)
 
 # Fitting the 'x_train' and 'x_test' data to be reduced to a lower component range
 pca.fit(x_train)
 x_train_pca = pca.transform(x_train)
 x_test_pca = pca.transform(x_test)
+pca_components = [50, 60, 70, 80, 90]
 
 if var in ['1', '4', '5']:
+
     # Perform Logistic regression inference on the 'x_train' and 'y_train'
     # Logistic regression is performed using 'sag' solver and 'ovr -> one-vs-rest' or 'multinomial' classifier
     # The objection function or the gradient descend is performed for a max iteration of 100
-    logistic_classifier = LogisticRegression(solver='sag', max_iter=4000, random_state=10,
-                                             multi_class='multinomial').fit(
-        x_train_pca, y_train)
+    logistic_classifier = LogisticRegression(solver='sag', max_iter=4000, random_state=42,
+                                             multi_class='multinomial').fit(x_train_pca, y_train)
 
     # The final prediction matrix
     y_predict = logistic_classifier.predict(x_test_pca)
@@ -112,7 +129,26 @@ if var in ['1', '4', '5']:
 
     print("****************************************************************************************\n")
 
-if var in ['2', '4', '5']:
+    if var == '5':
+        # Get the list of 'x_train' and 'x_test' for various PCA components declared at the script initialization
+        x_train_pca_list, x_test_pca_list = pca_computation(pca_components, x_train, x_test)
+        logistic_regression_accuracy_list = []
+        for idx, value in enumerate(pca_components):
+            x_train_pca_current = x_train_pca_list[idx]
+            x_test_pca_current = x_test_pca_list[idx]
+            # Performing the Logistic regression inference of the 'current_x_train' and 'y_train'
+            logistic_classifier_current = LogisticRegression(solver='sag', max_iter=4000, random_state=10,
+                                                             multi_class='multinomial').fit(x_train_pca_current,
+                                                                                            y_train)
+            # Final accuracy score of the current estimator.
+            final_accuracy = accuracy_score(logistic_classifier_current.predict(x_test_pca_current), y_test) * 100
+            logistic_regression_accuracy_list.append(final_accuracy)
+        plt.plot(pca_components, logistic_regression_accuracy_list)
+        plt.xlabel("PCA Components Range")
+        plt.ylabel("Logistic Regression Accuracy Value")
+        plt.show()
+
+if var in ['2', '4', '6']:
     # Support Vector Machine Classifier is identified to be a better classifier for this classification problem
     # Here I am trying to use a 'Linear' kernel for the converting the data for the non-linear separable data
     # to a high dimensional space
@@ -134,7 +170,25 @@ if var in ['2', '4', '5']:
 
     print("****************************************************************************************\n")
 
-if var in ['3', '4', '5']:
+    if var == '6':
+        # Obtaining the 'x_train' and 'x_test' for various PCA components
+        x_train_pca_list, x_test_pca_list = pca_computation(pca_components, x_train, x_test)
+        svm_accuracy_list = []
+        for idx, value in enumerate(pca_components):
+            x_train_pca_current = x_train_pca_list[idx]
+            x_test_pca_current = x_test_pca_list[idx]
+            svm_classifier_current = svm.SVC(kernel='linear')
+            # Performing the inference of the 'current_x_train' and 'y_train'
+            svm_classifier_current.fit(x_train_pca_current, y_train)
+            # Final accuracy of the current estimator
+            final_accuracy = accuracy_score(svm_classifier_current.predict(x_test_pca_current), y_test) * 100
+            svm_accuracy_list.append(final_accuracy)
+        plt.plot(pca_components, svm_accuracy_list)
+        plt.xlabel("PCA Components Range")
+        plt.ylabel("SVM Accuracy Value")
+        plt.show()
+
+if var in ['3', '4']:
     # ANOVA is a special type of filtering the input feature vector. The rationale behind this approach is to select the
     # most appropriate feature vector to maximize the accuracy of the 'SVM' estimator
     anova_filter = SelectKBest(f_regression, k=90)
